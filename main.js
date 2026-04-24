@@ -222,6 +222,16 @@ tiltCards.forEach((card) => {
 // ─── Project Filtering ──────────────────────────
 const filterBtns = document.querySelectorAll(".filter-btn");
 const projectCards = document.querySelectorAll(".project-card");
+const projectsGrid = document.querySelector(".projects-grid");
+const projectToggleBtn = document.getElementById("project-toggle-btn");
+
+function setProjectToggleLabel() {
+  if (!projectToggleBtn || !projectsGrid) return;
+  const collapsed = projectsGrid.classList.contains("collapsed");
+  projectToggleBtn.innerHTML = collapsed
+    ? '<i class="fa-solid fa-chevron-down"></i> Show More'
+    : '<i class="fa-solid fa-chevron-up"></i> Show Less';
+}
 
 filterBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -229,6 +239,11 @@ filterBtns.forEach((btn) => {
 
     filterBtns.forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
+
+    if (category !== "all" && projectsGrid) {
+      projectsGrid.classList.remove("collapsed");
+      setProjectToggleLabel();
+    }
 
     projectCards.forEach((card) => {
       const tags = card.getAttribute("data-tags") || "";
@@ -251,6 +266,20 @@ filterBtns.forEach((btn) => {
     });
   });
 });
+
+// ─── Projects "Show More" toggle (mobile) ──────
+if (projectToggleBtn && projectsGrid) {
+  projectToggleBtn.addEventListener("click", () => {
+    projectsGrid.classList.toggle("collapsed");
+    setProjectToggleLabel();
+
+    if (!projectsGrid.classList.contains("collapsed")) {
+      projectsGrid.querySelectorAll(".project-card.animate-on-scroll").forEach((el) => {
+        animateOnScroll.observe(el);
+      });
+    }
+  });
+}
 
 // ─── Certificates "Show More" toggle ────────────
 const certToggleBtn = document.getElementById("cert-toggle-btn");

@@ -1027,6 +1027,14 @@ section {
   z-index: 1;
 }
 
+.projects-toggle-container {
+  display: none;
+  text-align: center;
+  margin-top: var(--space-lg);
+  position: relative;
+  z-index: 1;
+}
+
 /* 3D Tilt Card */
 .tilt-card {
   transform-style: preserve-3d;
@@ -1436,6 +1444,11 @@ section {
   }
   .bento-large { grid-column: span 2; grid-row: auto; }
   .bento-medium { grid-column: auto; }
+  .bento-grid > .bento-stat:nth-child(3),
+  .bento-grid > .bento-stat:nth-child(4) {
+    grid-column: auto;
+    grid-row: auto;
+  }
 
   .services-grid { grid-template-columns: 1fr 1fr; }
   .certificates-grid { grid-template-columns: 1fr 1fr; }
@@ -1472,11 +1485,25 @@ section {
   .section-title { font-size: 2rem; }
 
   .bento-grid { grid-template-columns: 1fr; }
-  .bento-large { grid-column: auto; }
+  .bento-grid > .bento-card,
+  .bento-large,
+  .bento-medium,
+  .bento-grid > .bento-stat:nth-child(3),
+  .bento-grid > .bento-stat:nth-child(4) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .bento-card {
+    padding: var(--space-lg);
+  }
 
   .services-grid { grid-template-columns: 1fr; }
   .certificates-grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
+  .projects-grid.collapsed > .project-card:nth-of-type(n + 4) {
+    display: none;
+  }
+  .projects-toggle-container { display: block; }
 
   .footer-content {
     flex-direction: column;
